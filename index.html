@@ -11,8 +11,8 @@
 	<div class="container">
 
     <header>
-      <span>Register for</span>
-      <h1>Full Stack Conf</h1>
+      <span>Registration</span>
+      <h1>Full Stack Conference</h1>
     </header>
 
     <form action="index.html" method="post" novalidate>
@@ -35,6 +35,8 @@
           <option value="student">Student</option>
           <option value="other">Other</option>
         </select>
+        <label for="other-title"></label>
+        <input type="text" id="other-title" name="user-title">
       </fieldset>
 
       <fieldset class="shirt">
@@ -63,6 +65,7 @@
           <div id="colors-js-puns" class="">
             <label for="color">Color:</label>
             <select id="color">
+              <option value="default">Please select a T-shirt theme</option>
               <option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
               <option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>
               <option value="gold">Gold (JS Puns shirt only)</option>
@@ -174,6 +177,6 @@
 
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="/script.js/"></script>
+  <script src="/JS/script.js"></script>
 </body>
 </html>
