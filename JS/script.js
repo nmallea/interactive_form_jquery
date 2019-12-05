@@ -6,14 +6,23 @@ const tshirtColor = $('#colors-js-puns');
 const selectTheme = $('#select-theme');
 const design = $('select#design');
 const colorOptions = $('select#color option');
+const paymentOption = $('#payment');
+const paymentCC = $('#credit-card');
+const paymentPayPal = $('#paypal');
+const paymentBitCoin = $('#bitcoin');
 
 // set focus on the first text field
 $(document).ready(function () {
-  document.getElementById('name').focus();
+  $('#name').focus();
+
+  // hides other job role input field before called
+  otherJobRole.hide();
+  paymentCC.hide();
+  paymentPayPal.hide();
+  paymentBitCoin.hide();
 });
 
-// hides other job role input field before called
-otherJobRole.hide();
+
 
 // hides the color dropdown until a design theme is chosen
 // tshirtColor.hide();
@@ -33,7 +42,7 @@ $('option[value="select method"]').attr('disabled', true);
 //      ---------------- Job Role -----------------------
 // Include a text field that will be revealed when the 'Other' option is selected from the 'Job Role' drop down menu. If 'Other' selected in job role drop down, show other-title input field
 $(jobRole).change(function () {
-  if (jobRole.val() === 'other') {
+  if (jobRole.val().toLowerCase() === 'other') {
     otherJobRole.show();
   } else {
     otherJobRole.hide();
@@ -48,6 +57,8 @@ design.change(e => {
   tshirtColor.hide();
   colorOptions.hide();
 
+  console.log("e: ", tshirtDesign.val());
+
 
   // findOptions -->  collection of items containing
   function findOptions(element, text) {
@@ -57,13 +68,15 @@ design.change(e => {
     });
   }
   // user selects 'js puns' designs --> show the puns colors
-  if (tshirtDesign.val() === 'js puns') {
+  if (tshirtDesign.val().toLowerCase() === 'js puns') {
+    console.log("js puns: ", tshirtDesign.val());
+
     // show the color section
     tshirtColor.show();
     // display first option pre-selected
     findOptions(colorOptions, 'puns').show().first().prop('selected', true);
     // user selects the 'heart js' designs --> show the heart colors
-  } else if (tshirtDesign.val() === 'heart js') {
+  } else if (tshirtDesign.val().toLowerCase() === 'heart js') {
     tshirtColor.show();
     // display first option pre-selected
     findOptions(colorOptions, 'heart').show().first().prop('selected', true);
@@ -129,24 +142,22 @@ function totalPrice(total) {
 // Display payment sections based on the payment option chosen in the select menu. Hide of display information depending on user selection.
 
 //event listener for payment section
-$('#payment').on('change', function () {
+$('#payment').on('change', function() {
   $('option[value="select method"]').hide();
-  if ($('#payment').val() === 'Credit Card') {
+  if ($('#payment').val().toLowerCase() === 'credit card') {
     $('#credit-card').show();
     $('#paypal').hide();
     $('#bitcoin').hide();
-  } else if ($('#payment').val() === 'PayPal') {
+  } else if ($('#payment').val().toLowerCase() === 'paypal') {
     $('#credit-card').hide();
     $('#paypal').show();
     $('#bitcoin').hide();
-  } else if ($('#payment').val() === 'Bitcoin') {
+  } else if ($('#payment').val().toLowerCase() === 'bitcoin') {
     $('#credit-card').hide();
     $('#paypal').hide();
     $('#bitcoin').show();
   }
 })
-
-
 
 // --------------- Form Validation & Messages ---------------------
 // validate fields. if errors exist, prevent the user from submitting the form. Provide indication when there’s a validation error.
@@ -206,7 +217,6 @@ console.log(checkCvv);
 function checkActivities() {
   if ($('input[type=checkbox]:checked').length < 1) {
     return false;
-    //console.log('checkActivities');
   } else {
     return true;
   }
@@ -245,23 +255,26 @@ function errorMessages() {
   };
 
   if (!checkActivities()) {
+    $('label[for="checkbox"]').text('Please select activities').css('color', 'red');
+    console.log("hello")
+/*   };
     $('#select-activity').show();
-    $('#select-activity').css('color', 'red');
+    $('#select-activity').css('color', 'red'); */
   }
 
   if ($('#payment').val() === 'Credit Card') {
     if (!checkCreditCard()) {
-      $('label[for="cc-num"]').text('Card Number: Please enter a credit card number.').css('color', 'red');
+      $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
     } else if (checkCreditCard() === -1) {
-      $('label[for="cc-num"]').text('Card Number: Please enter a 13-16 digit credit card number.').css('color', 'red');
+      $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
     };
 
     if (!checkZip()) {
-      $('label[for="zip"]').text('Zip Code: Please enter a 5 digit Zipcode.').css('color', 'red');
+      $('label[for="zip"]').text('Enter the Zip-code.').css('color', 'red');
     };
 
     if (!checkCvv()) {
-      $('label[for="cvv"]').text('CVV: Please enter your 3 digit CVV.').css('color', 'red');
+      $('label[for="cvv"]').text('Enter a 3 digit CVV').css('color', 'red');
     };
   }
 }
@@ -273,7 +286,7 @@ function errorMessages() {
 // name
 $('#name').on('focusout', function () {
   if (!checkName()) {
-    $('label[for="name"]').text('Name: Please enter your name.').css('color', 'red');
+    $('label[for="name"]').text('Please enter your name').css('color', 'red');
   } else {
     $('label[for="name"]').text('Name:').css('color', 'black')
   }
@@ -282,7 +295,7 @@ $('#name').on('focusout', function () {
 // email
 $('#mail').on('focusout', function () {
   if (!checkEmail()) {
-    $('label[for="mail"]').text('Email: Please enter a valid email address.').css('color', 'red');
+    $('label[for="mail"]').text('Please enter a valid email address').css('color', 'red');
   } else {
     $('label[for="mail"]').text('Email:').css('color', 'black');
   }
@@ -291,9 +304,9 @@ $('#mail').on('focusout', function () {
 // credit Card Number
 $('#cc-num').on('focusout', function () {
   if (!checkCreditCard()) {
-    $('label[for="cc-num"]').text('Card Number: Please enter a credit card number.').css('color', 'red');
+    $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
   } else if (checkCreditCard() === -1) {
-    $('label[for="cc-num"]').text('Card Number: Please enter a 13-16 digit credit card number.').css('color', 'red');
+    $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
   } else {
     $('label[for="cc-num"]').text('Card Number:').css('color', 'black');
   }
@@ -302,7 +315,7 @@ $('#cc-num').on('focusout', function () {
 // zip
 $('#zip').on('focusout', function () {
   if (!checkZip()) {
-    $('label[for="zip"]').text('Zip Code: Please enter a 5 digit Zipcode.').css('color', 'red');
+    $('label[for="zip"]').text('Enter the Zip-code').css('color', 'red');
   } else {
     $('label[for="zip"]').text('Zip Code:').css('color', 'black');
   }
@@ -311,7 +324,7 @@ $('#zip').on('focusout', function () {
 // cvv
 $('#cvv').on('focusout', function () {
   if (!checkCvv()) {
-    $('label[for="cvv"]').text('CVV: Please enter your 3 digit CVV.').css('color', 'red');
+    $('label[for="cvv"]').text('Enter a 3 digit CVV').css('color', 'red');
   } else {
     $('label[for="cvv"]').text('CVV:').css('color', 'black');
   }
