@@ -1,11 +1,6 @@
 // declared variables
 const jobRole = $('#title');
 const otherJobRole = $('#other-title');
-const tshirtDesign = $('#design');
-const tshirtColor = $('#colors-js-puns');
-const selectTheme = $('#select-theme');
-const design = $('select#design');
-const colorOptions = $('select#color option');
 const paymentOption = $('#payment');
 const paymentCC = $('#credit-card');
 const paymentPayPal = $('#paypal');
@@ -14,21 +9,13 @@ const paymentBitCoin = $('#bitcoin');
 // set focus on the first text field
 $(document).ready(function () {
   $('#name').focus();
-
-  // hides other job role input field before called
+  // hides other job role, t-shirt color and payment fields before called
   otherJobRole.hide();
+  tshirtColor.hide();
   paymentCC.hide();
   paymentPayPal.hide();
   paymentBitCoin.hide();
 });
-
-
-
-// hides the color dropdown until a design theme is chosen
-// tshirtColor.hide();
-
-// hides activity error message
-$('#select-activity').hide();
 
 // set credit card as default display
 $('#credit-card').show();
@@ -50,41 +37,40 @@ $(jobRole).change(function () {
 });
 
 //    ------------------- T-Shirt Info ----------------------
-// Do not show the t-shirt color options until the user selects a design, and then show only the relevant t-shirt color options, with the first options selected
+// do not show the t-shirt color options until the user selects a design, and then show only the relevant t-shirt color options, with the first options selected
 
-design.change(e => {
-  // Hide the color div and color options
-  tshirtColor.hide();
-  colorOptions.hide();
+// hide 'select theme' in design menu
+const tshirtColor = $('#colors-js-puns')
+const tshirtDesign = $('#design');
+const designSelectOptions = $('#design option');
+// designSelectOptions.eq(0).hide();
 
-  console.log("e: ", tshirtDesign.val());
+// change default color dropdown option//hide all others
+const colorSelect = $('#color');
+const colorSelectOptions = $('#color option');
+const colorPlaceholder = $("<option value='choosetheme' selected='selected'>Please select a T-shirt design</option>");
+colorSelect.prepend(colorPlaceholder);
+colorSelect.children().hide();
 
-
-  // findOptions -->  collection of items containing
-  function findOptions(element, text) {
-    return element.filter(function (index, item) {
-      const passes = $(this).text().indexOf(text) > 0;
-      return passes;
-    });
-  }
-  // user selects 'js puns' designs --> show the puns colors
-  if (tshirtDesign.val().toLowerCase() === 'js puns') {
-    console.log("js puns: ", tshirtDesign.val());
-
-    // show the color section
-    tshirtColor.show();
-    // display first option pre-selected
-    findOptions(colorOptions, 'puns').show().first().prop('selected', true);
-    // user selects the 'heart js' designs --> show the heart colors
-  } else if (tshirtDesign.val().toLowerCase() === 'heart js') {
-    tshirtColor.show();
-    // display first option pre-selected
-    findOptions(colorOptions, 'heart').show().first().prop('selected', true);
-  };
-})
+// change color dropdown options when design is chosen
+tshirtDesign.on('change',function(event){
+    $('#colors-js-puns').show();
+    colorPlaceholder.remove();
+    if ($(event.target).val()==='js puns'){
+        colorSelectOptions.eq(0).prop('selected',true);
+        $('#color option:gt(2)') && $('#color option:lt(6)').hide();
+        $('#color option:gt(0)') && $('#color option:lt(3)').show();
 
 
-// ---------- Register for Activities” section ---------
+    } else {
+        colorSelectOptions.eq(3).prop('selected',true);
+        $('#color option:gt(2)') && $('#color option:lt(6)').show();
+        $('#color option:gt(0)') && $('#color option:lt(3)').hide();
+    }
+});
+
+
+// ---------- Register for Activities section ---------
 // User should not be able to choose events that conflict with one another. Disable/enable depending on checkboxes. As a user selects activities, a running total should display below the list of checkboxes
 
 $(".activities").on("click", function () {
@@ -163,7 +149,7 @@ $('#payment').on('change', function() {
 // validate fields. if errors exist, prevent the user from submitting the form. Provide indication when there’s a validation error.
 
 
-// name
+// name validation
 function checkName() {
   let nameRegex = /^[a-zA-Z]+$/;
   if (nameRegex.test($('#name').val())) {
@@ -173,7 +159,7 @@ function checkName() {
   }
 }
 
-// email
+// email validation
 function checkEmail() {
   let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;;
   if (emailRegex.test($('#mail').val())) {
@@ -183,7 +169,7 @@ function checkEmail() {
   }
 }
 
-// credit card number
+// credit card number validation
 function checkCreditCard() {
   const creditCardRegex = /^\d{4}([ \-]?)((\d{6}\1?\d{5})|(\d{4}\1?\d{4}\1?\d{4}))$/gm;
   if (creditCardRegex.test($('#cc-num').val())) {
@@ -192,7 +178,8 @@ function checkCreditCard() {
     return false;
   }
 }
-// zip
+
+// zip validation
 function checkZip() {
   let zipRegex = /^[0-9]{5}$/;
   if (zipRegex.test($('#zip').val())) {
@@ -202,7 +189,7 @@ function checkZip() {
   }
 }
 
-// cvv
+// cvv validation
 function checkCvv() {
   let cvvRegex = /^[0-9]{3}$/;
   if (cvvRegex.test($('#cvv').val())) {
@@ -211,21 +198,17 @@ function checkCvv() {
     return false;
   }
 }
-console.log(checkCvv);
 
-// activities
+// activity validation
 function checkActivities() {
   if ($('input[type=checkbox]:checked').length < 1) {
     return false;
   } else {
     return true;
   }
-
 }
 
-
-
-// function to run all validations
+// function to run the validations
 function checkForm() {
   if ($('#payment').val() === 'Credit Card') {
     if (checkName() && checkEmail() && checkActivities() && (checkCreditCard() && checkCreditCard() !== -1) && checkZip() && checkCvv()) {
@@ -255,18 +238,18 @@ function errorMessages() {
   };
 
   if (!checkActivities()) {
-    $('label[for="checkbox"]').text('Please select activities').css('color', 'red');
-    console.log("hello")
-/*   };
+    $('label[for="all"]').text('Please select activities').css('color', 'red');
     $('#select-activity').show();
-    $('#select-activity').css('color', 'red'); */
-  }
+    $('#select-activity').css('color', 'red');
+  };
+
+}
 
   if ($('#payment').val() === 'Credit Card') {
     if (!checkCreditCard()) {
       $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
     } else if (checkCreditCard() === -1) {
-      $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
+      $('label[for="cc-num"]').text('Please enter 13- 16 digit number').css('color', 'red');
     };
 
     if (!checkZip()) {
@@ -277,7 +260,6 @@ function errorMessages() {
       $('label[for="cvv"]').text('Enter a 3 digit CVV').css('color', 'red');
     };
   }
-}
 
 
 
@@ -300,6 +282,7 @@ $('#mail').on('focusout', function () {
     $('label[for="mail"]').text('Email:').css('color', 'black');
   }
 })
+
 
 // credit Card Number
 $('#cc-num').on('focusout', function () {
@@ -330,6 +313,19 @@ $('#cvv').on('focusout', function () {
   }
 })
 
+ // all credit card fields
+ checkCreditCard();
+ checkZip();
+ checkCvv();
+
+ if (checkCreditCard() && checkZip() && checkCvv()) {
+  return true;
+ }  else {
+      return false;
+}
+
+
+
 
 // event listener --> submit button
 $('button[type="submit"]').on('click', function (e) {
@@ -338,5 +334,6 @@ $('button[type="submit"]').on('click', function (e) {
   } else {
     e.preventDefault();
     errorMessages();
+
   }
 })
