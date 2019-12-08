@@ -26,8 +26,9 @@ paymentBitCoin.hide();
 // disable option "selectors"
 $('option[value="select method"]').attr('disabled', true);
 
-//      ---------------- Job Role -----------------------
-// Include a text field that will be revealed when the 'Other' option is selected from the 'Job Role' drop down menu. If 'Other' selected in job role drop down, show other-title input field
+/*       ---------------- Job Role -----------------------
+ Include a text field that will be revealed when the 'Other' option is selected from the 'Job Role' drop down menu. If 'Other' selected in job role drop down, show other-title input field */
+
 $(jobRole).change(() => {
   if (jobRole.val().toLowerCase() === 'other') {
     otherJobRole.show();
@@ -36,8 +37,8 @@ $(jobRole).change(() => {
   }
 });
 
-//    ------------------- T-Shirt Info ----------------------
-// do not show the t-shirt color options until the user selects a design, and then show only the relevant t-shirt color options, with the first options selected
+/*     ------------------- T-Shirt Info ----------------------
+ do not show the t-shirt color options until the user selects a design, and then show only the relevant t-shirt color options, with the first options selected */
 
 // hide 'select theme' in design menu
 const tshirtColor = $('#colors-js-puns');
@@ -68,9 +69,9 @@ tshirtDesign.on('change', ({target}) => {
   }
 });
 
-// ---------- Register for Activities section ---------
-// User should not be able to choose events that conflict with one another. Disable/enable depending on checkboxes. As a user selects activities, a running total should display below the list of checkboxes
-
+/*  ---------- Register for Activities section ---------
+ User should not be able to choose events that conflict with one another. Disable/enable depending on checkboxes. As a user selects activities, a running total should display below the list of checkboxes
+ */
 $('.activities').on('click', () => {
   let total = 0;
 
@@ -131,8 +132,8 @@ const totalPrice = total => {
   }
 }
 
-// ---------------- "Payment Info" section ---------------
-// Display payment sections based on the payment option chosen in the select menu. Hide of display information depending on user selection.
+/*  ---------------- "Payment Info" section ---------------
+ Display payment sections based on the payment option chosen in the select menu. Hide of display information depending on user selection. */
 
 //event listener for payment section
 paymentOption.on('change', () => {
@@ -152,8 +153,8 @@ paymentOption.on('change', () => {
   }
 });
 
-// --------------- Form Validation & Messages ---------------------
-// validate fields. if errors exist, prevent the user from submitting the form. Provide indication when there’s a validation error.
+/*  --------------- Form Validation & Messages ---------------------
+ validate fields. if errors exist, prevent the user from submitting the form. Provide indication when there’s a validation error. */
 
 // name validation
 // function checkName() {
@@ -171,8 +172,6 @@ const checkEmail = () => {
   return emailRegex.test($('#mail').val());
 }
 
-// TODO: cleanup from here
-
 // credit card number validation
 function checkCreditCardNumber() {
   const creditCardRegex = /^(?:\d[ -]*?){13,16}$/gm;
@@ -181,7 +180,7 @@ function checkCreditCardNumber() {
 }
 
 const checkCreditCardNumberLength = () => {
-  const regEx = /[^\w\s]/gi; // remove whitespaces and special chars
+  const regEx = /[^\w\s]/gi;
   const ccNum = $('#cc-num')
     .val()
     .replace(regEx, '').length;
