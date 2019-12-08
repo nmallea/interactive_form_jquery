@@ -249,7 +249,7 @@ function errorMessages() {
     if (!checkCreditCard()) {
       $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
     } else if (checkCreditCard() === -1) {
-      $('label[for="cc-num"]').text('Please enter 13- 16 digit number').css('color', 'red');
+      $('label[for="cc-num"]').text('Please enter 13-16 digit number').css('color', 'red');
     };
 
     if (!checkZip()) {
@@ -263,7 +263,7 @@ function errorMessages() {
 
 
 
-// event listeners for fields
+// event listeners for fields (missing activities)
 
 // name
 $('#name').on('focusout', function () {
@@ -284,12 +284,12 @@ $('#mail').on('focusout', function () {
 })
 
 
-// credit Card Number
+// credit Card Number (do not get correct error for 10 digit number)
 $('#cc-num').on('focusout', function () {
   if (!checkCreditCard()) {
     $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
   } else if (checkCreditCard() === -1) {
-    $('label[for="cc-num"]').text('Please enter a valid credit card number').css('color', 'red');
+    $('label[for="cc-num"]').text('Please enter 13-16 digit number').css('color', 'red');
   } else {
     $('label[for="cc-num"]').text('Card Number:').css('color', 'black');
   }
@@ -313,18 +313,6 @@ $('#cvv').on('focusout', function () {
   }
 })
 
- // all credit card fields
- checkCreditCard();
- checkZip();
- checkCvv();
-
- if (checkCreditCard() && checkZip() && checkCvv()) {
-  return true;
- }  else {
-      return false;
-}
-
-
 
 
 // event listener --> submit button
@@ -332,7 +320,7 @@ $('button[type="submit"]').on('click', function (e) {
   if (checkForm()) {
     alert('Registration submitted. See you at the conference!')
   } else {
-    e.preventDefault();
+    preventDefault();
     errorMessages();
 
   }
