@@ -25,6 +25,7 @@ paymentBitCoin.hide();
 
 // disable option "selectors"
 $('option[value="select method"]').attr('disabled', true);
+$('option:contains("Select Theme")').attr('disabled', true);
 
 /*       ---------------- Job Role -----------------------
  Include a text field that will be revealed when the 'Other' option is selected from the 'Job Role' drop down menu. If 'Other' selected in job role drop down, show other-title input field */
