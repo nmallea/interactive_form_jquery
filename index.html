@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Register for Full Stack Conf</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 	<div class="container">
@@ -16,7 +16,6 @@
     </header>
 
     <form id="submit" action="index.html" method="post" novalidate>
-
       <fieldset>
         <legend>Basic Info</legend>
 
@@ -78,31 +77,31 @@
 
       <fieldset class="activities">
         <legend>Register for Activities</legend>
-        <label for= "all">
+        <label for="all">
           <input type="checkbox" name="all" data-cost="$200"> Main Conference — $200
         </label>
         <label>
-          <input type="checkbox" name="js-frameworks" value="100" data-day-and-time="Tuesday 9am-12pm" data-cost="100">
+          <input type="checkbox" name="js-frameworks" data-day-and-time="Tuesday 9am-12pm" data-cost="100">
             JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100
         </label>
         <label>
-          <input type="checkbox" name="js-libs" value="100" data-day-and-time="Tuesday 1pm-4pm" data-cost="100">
+          <input type="checkbox" name="js-libs" data-day-and-time="Tuesday 1pm-4pm" data-cost="100">
           JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100
         </label>
         <label>
-          <input type="checkbox" name="express" value="100" data-day-and-time="Tuesday 9am-12pm" data-cost="100">
+          <input type="checkbox" name="express" data-day-and-time="Tuesday 9am-12pm" data-cost="100">
           Express Workshop — Tuesday 9am-12pm, $100
         </label>
         <label>
-          <input type="checkbox" name="node" value="100" data-day-and-time="Tuesday 1pm-4pm" data-cost="100">
+          <input type="checkbox" name="node" data-day-and-time="Tuesday 1pm-4pm" data-cost="100">
           Node.js Workshop — Tuesday 1pm-4pm, $100
         </label>
         <label>
-          <input type="checkbox" name="build-tools" value="100" data-day-and-time="Wednesday 9am-12pm" data-cost="100">
+          <input type="checkbox" name="build-tools" data-day-and-time="Wednesday 9am-12pm" data-cost="100">
           Build tools Workshop — Wednesday 9am-12pm, $100
         </label>
         <label>
-          <input type="checkbox" name="npm" value="100" data-day-and-time="Wednesday 1pm-4pm" data-cost="100">
+          <input type="checkbox" name="npm" data-day-and-time="Wednesday 1pm-4pm" data-cost="100">
           npm Workshop — Wednesday 1pm-4pm, $100
         </label>
         <span id="total"> </span>
@@ -177,6 +176,6 @@
 
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="/JS/script.js"></script>
+  <script src="./js/script.js"></script>
 </body>
 </html>
